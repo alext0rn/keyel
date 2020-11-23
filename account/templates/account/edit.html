@@ -1,0 +1,33 @@
+{% extends "shop/basic.html" %}
+{% load static %}
+
+{% block title %}Редагування даних{% endblock %}
+
+
+
+{% block content %}
+<div class="wrapper">
+  <div class="profile__profile-menu">
+  <div class="login">
+    <h1 class="login__h1">Редагування даних</h1>
+    <form class="login__form" action="." method="post" enctype="multipart/form-data">
+      <div class="login__form-label-field">
+      {% for field in user_form %}
+        <p class="login__form_label">{{field.label}}:</p>
+        <p class="login__form_field">{{ field }}</p>
+      {% endfor %}
+      </div>
+      <div class="login__form-label-field">
+      {% for field in profile_form %}
+        <p class="login__form_label">{{field.label}}:</p>
+        <p class="login__form_field">{{ field }}</p>
+      {% endfor %}
+      </div>
+    {% csrf_token %}
+    <input class="login__form-button" type="submit" value="Зберегти">
+    </form>
+  </div>
+  {% include "account/profile_menu.html" %}
+</div>
+</div>
+{% endblock %}

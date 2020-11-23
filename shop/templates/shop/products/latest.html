@@ -1,0 +1,18 @@
+{% load static %}
+<div class="latest-products-div">
+  <h1 class="latest-products-h1">Нові товари: </h1>
+  <div class = "latest-products">
+    {% for product in latest_products %}
+      <div class = "latest-product">
+        {% if product.image %}
+        <a href="{% url 'shop:product_detail' product.category.slug product.slug %}"><img class = "latest-product-image" src="{{ product.image.url }}" alt="product-image"></a>
+        {% else %}
+        <a href="{% url 'shop:product_detail' product.category.slug product.slug %}"><img class = "latest-product-image" src="{% static 'images/no_image.png' %}" alt="no image"></a>
+        {% endif %}
+        <a href="{% url 'shop:product_detail' product.category.slug product.slug %}"><p class = "latest-product-name">{{ product.name }}</p></a>
+        <a href="{% url 'shop:product_detail' product.category.slug product.slug %}"><p class = "latest-product-price">{{ product.price }} грн.</p></a>
+        <div class="hover-line"></div>
+      </div>
+    {% endfor %}
+  </div>
+</div>

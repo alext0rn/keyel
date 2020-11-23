@@ -1,0 +1,11 @@
+{% extends "shop/basic.html" %}
+{% load shop_tags %}
+{% load static %}
+{% block title %}Вітаємо!{% endblock %}
+
+{% block content %}
+<div class="register-done">
+  <h1 class="register-done-h1">Вітаємо, {{ new_user.first_name }}!</h1>
+  <p class="register-done-p">Ваш акаунт був успішно зареєстрований, тепер ви можете <a class="register-done-link" href="{% url 'account:login' %}">увійти</a>.</p>
+  </div>
+{% endblock %}

@@ -1,0 +1,26 @@
+<div class="product-list-filter-form">
+<form action ="{% url 'shop:konsoli_filter' %}" method = "get" class = "form-filters">
+  <input class = "form-filters-submit" type="submit" value="Пошук">
+  <h3 class="form-filters__h3">Виробник</h5>
+    {% for manufacturer in view.get_konsoli_manufacturer %}
+    <label class="form-filters-container"><p class="form-filters-container__p">{{ manufacturer.value }}</p>
+    <input type="checkbox" name = "manufacturer" value = "{{ manufacturer.value }}">
+    <span class="form-filters-container__checkmark"></span>
+    </label>
+    {% endfor %}
+  <h3 class="form-filters__h3">Тип</h3>
+    {% for type in view.get_konsoli_type %}
+    <label class="form-filters-container"><p class="form-filters-container__p">{{ type.value }}</p>
+    <input type="checkbox" name = "type" value = "{{ type.value }}">
+    <span class="form-filters-container__checkmark"></span>
+    </label>
+    {% endfor %}
+  <h3 class="form-filters__h3">Жорсткий диск, гб</h3>
+    {% for harddrive in view.get_konsoli_harddrive %}
+    <label class="form-filters-container"><p class="form-filters-container__p">{{ harddrive.value }}</p>
+    <input type="checkbox" name = "harddrive" value = "{{ harddrive.value }}">
+    <span class="form-filters-container__checkmark"></span>
+    </label>
+    {% endfor %}
+</form>
+</div>

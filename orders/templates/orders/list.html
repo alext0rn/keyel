@@ -1,0 +1,56 @@
+{% extends "shop/basic.html" %}
+{% load static %}
+
+{% block title %}Мої замовлення{% endblock %}
+
+{% block sidemenu %}
+  {% include "account/profile_menu.html" %}
+{% endblock sidemenu%}
+
+{% block content %}
+<div class="wrapper">
+  <div class="profile__profile-menu">
+  {% if orders.count == 0 %}
+  <p>Ви ще ничого не замовляли</p>
+  {% else %}
+  <div class="all_orders">
+    <h2 class="all_orders__h2">Мої замовлення ({{orders.count}}):</h2>
+    {% for order in orders %}
+      <div class="all_orders-order">
+        <h3 class="all_orders-order__h3">{{order}}</h3>
+        <table class="order__table">
+          <thead class = "order__table-thread">
+            <tr class="order__table-thread-tr">
+              <th class="order__table-img">Зображення</th>
+              <th class="order__table-th">Товар</th>
+              <th class="order__table-th2">Кількість</th>
+              <th class="order__table-th3">Ціна</th>
+            </tr>
+          <thread>
+          <tbody>
+          {% for item in order.items.all %}
+          <tr>
+            <th>
+              {% if item.product.image %}
+              <img class="order__table-image" src="{{item.product.image.url }}" alt="{{item.product}} image">
+              {% else %}
+              <img class="order__table-image" src="{% static 'images/no_image.png' %}" alt="no image">
+              {% endif %}
+            </th>
+            <th class="order__table-th">{{item.product}}</th>
+            <th class="order__table-th2">{{item.quantity}}</th>
+            <th>{{item.price}}грн</th>
+          </tr>
+          {% endfor %}
+        </tbody>
+        </table>
+        <p class="all_orders__order-p">Оформлений: {{ order.created }}</p>
+        <p class="all_orders__order-p">Статус: {{ order.get_status_display }}</p>
+      </div>
+    {% endfor %}
+  </div>
+  {% endif%}
+  {% include "account/profile_menu.html" %}
+</div>
+</div>
+{% endblock %}

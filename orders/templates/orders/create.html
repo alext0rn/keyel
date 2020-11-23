@@ -1,0 +1,36 @@
+{% extends "shop/basic.html" %}
+{% load static %}
+
+{% block title %}Оформлення замовлення{% endblock title%}
+
+{% block content %}
+<div class="wrapper">
+<div class="order-checkout">
+      <div class="login">
+      <h1 class="login__h1">Оформлення замовлення:</h1>
+      <form action="." method="post" class="login__form">
+        <div class="login__form-label-field">
+        {% for field in form %}
+          <p class="login__form_label">{{field.label}}:</p>
+          <p class="login__form_field">{{ field }}</p>
+        {% endfor %}
+        </div>
+        <input class="login__form-button" type="submit" value="Заказать">
+        {% csrf_token %}
+      </form>
+      </div>
+      <div class="order-info">
+        <h3 class= "order-info-h3" >Ваше замовлення:</h3>
+        <ul class= "order-info-ul" >
+        {% for item in cart %}
+        <li class= "order-info-li" >
+        {{ item.quantity }}x {{ item.product.name }}
+        <span>{{ item.total_price }} грн.</span>
+        </li>
+        {% endfor %}
+        </ul>
+        <p class= "order-info-p" >Всього: {{ cart.get_total_price }} грн.</p>
+      </div>
+</div>
+</div>
+{% endblock %}

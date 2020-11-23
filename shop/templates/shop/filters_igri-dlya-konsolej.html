@@ -1,0 +1,19 @@
+<div class="product-list-filter-form">
+<form action ="{% url 'shop:igri_filter' %}" method = "get" class = "form-filters">
+  <input class = "form-filters-submit" type="submit" value="Пошук">
+  <h3 class="form-filters__h3">Платформа</h5>
+    {% for platform in view.get_igri_platform %}
+    <label class="form-filters-container"><p class="form-filters-container__p">{{ platform.value }}</p>
+    <input type="checkbox" name = "platform" value = "{{ platform.value }}">
+    <span class="form-filters-container__checkmark"></span>
+    </label>
+    {% endfor %}
+  <h3 class="form-filters__h3">Жанр</h3>
+    {% for janr in view.get_igri_janr %}
+    <label class="form-filters-container"><p class="form-filters-container__p">{{ janr.value }}</p>
+    <input type="checkbox" name = "janr" value = "{{ janr.value }}">
+    <span class="form-filters-container__checkmark"></span>
+    </label>
+    {% endfor %}
+</form>
+</div>

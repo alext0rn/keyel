@@ -1,0 +1,9 @@
+<div class="profile-menu">
+  <ul class="profile-menu-ul">
+    <li class="profile-menu-ul_li"><a href="{% url 'account:cabinet' %}">Кабінет</a></li>
+    <li class="profile-menu-ul_li"><a href="{% url 'account:edit' %}">Редагувати дані</a></li>
+    <li class="profile-menu-ul_li"><a href="{% url 'orders:view_orders' %}">Мої замовлення ({{orders.count}})</a></li>
+    <li class="profile-menu-ul_li"><a href="{% url 'account:password_change' %}">Змінити пароль</a></li>
+    <li class="profile-menu-ul_li"><a href="{% url 'account:logout' %}">Вийти</a></li>
+  </ul>
+</div>

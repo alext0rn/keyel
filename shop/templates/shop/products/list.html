@@ -1,0 +1,43 @@
+{% extends "shop/basic.html" %}
+{% load static %}
+{% block title %}{{ current_category.name }}{% endblock title %}
+
+
+{% block content %}
+<div class="wrapper">
+  <div class="list-products-filters-category">
+    <div class = "list-products-filters-category__description">
+      <h1 class = "list-products-filters-category__description__h1"><a class = "list-products-filters-category__description__a" href="{% url 'shop:product_list_by_category' current_category.slug %}">Категорія: {{ current_category.name }}</a></h1>
+      <p class = "list-products-filters-category__description__p">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam, doloribus dicta laborum voluptas, nostrum voluptatibus quibusdam eum! Eaque hic quos cumque ea beatae voluptatum necessitatibus, animi saepe veniam amet adipisci laboriosam placeat. Sunt reprehenderit, dolores voluptatem provident earum minus temporibus architecto, voluptatibus quisquam, maiores quis placeat modi consequuntur. Porro repudiandae necessitatibus pariatur fuga tenetur, qui doloribus optio, dolor recusandae cum debitis officiis natus eveniet animi impedit voluptates consequuntur odit repellendus quae harum sequi aut, velit!</p>
+    </div>
+    {% if current_category.name == "Комп'ютери" %}
+      {% include "shop/filters_computers.html" %}
+    {% endif %}
+    {% if current_category.name == "Ноутбуки" %}
+      {% include "shop/filters_noutbuki.html" %}
+    {% endif %}
+    {% if current_category.name == "Ігрові консолі" %}
+      {% include "shop/filters_igrovi-konsoli.html" %}
+    {% endif %}
+    {% if current_category.name == "Ігри для консолей" %}
+      {% include "shop/filters_igri-dlya-konsolej.html" %}
+    {% endif %}
+    <div class="product-list-pagination">
+        <div class = "product-list">
+          {% for product in products %}
+            <div class = "product">
+              {% if product.image %}
+              <a href="{% url 'shop:product_detail' product.category.slug product.slug %}"><img class = "product-image" src="{{ product.image.url }}" alt="product-image"></a>
+              {% else %}
+              <a href="{% url 'shop:product_detail' product.category.slug product.slug %}"><img class = "product-image" src="{% static 'images/no_image.png'%}" alt="no image"></a>
+              {% endif %}
+              <a href="{% url 'shop:product_detail' product.category.slug product.slug %}"><p class = "product-name">{{ product.name }}</p></a>
+              <a href="{% url 'shop:product_detail' product.category.slug product.slug %}"><p class = "product-price">{{ product.price }} грн.</p></a>
+            </div>
+          {% endfor %}
+          </div>
+          {% include "shop/paginator.html" with page=products %}
+      </div>
+  </div>
+</div>
+{% endblock content %}

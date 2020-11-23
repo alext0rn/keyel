@@ -1,0 +1,16 @@
+{% extends 'shop/basic.html' %}
+{% load shop_tags %}
+{% load static %}
+
+{% block content %}
+  <img class="basic-banner" src="{% static 'images/banner.png'%}" alt="banner">
+  <div class="wrapper">
+    {% show_latest_products 4 %}
+    {% show_most_products 4 %}
+    <div class="basic-about-magazin">
+      <h1 class="basic-about-magazin__h1">Про магазин</h1>
+      <img class="basic-about-magazin__image" src="{% static 'images/team.png '%}" alt="team">
+      <p>  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore, quod recusandae. Mollitia sunt accusamus ex eligendi, nobis dolor quo dolorum tempora aspernatur repudiandae deserunt eum quaerat, molestias corporis sed eaque at neque. Excepturi esse perferendis veniam quibusdam laboriosam, aliquam totam, et quis eius, mollitia maiores maxime nemo quae soluta quo itaque sunt, dolore rerum quam ipsa ducimus pariatur error. Accusantium eaque alias repellat ut minima, enim, eius molestiae quae placeat odit cumque, tempora ea suscipit.</p>
+    </div>
+  </div>
+{% endblock content %}

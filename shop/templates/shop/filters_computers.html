@@ -1,0 +1,40 @@
+<div class="product-list-filter-form">
+<form action ="{% url 'shop:computers_filter' %}" method = "get" class = "form-filters">
+  <input class = "form-filters-submit" type="submit" value="Пошук">
+  <h3 class="form-filters__h3">Процесор</h5>
+    {% for cpu in view.get_cpu %}
+    <label class="form-filters-container"><p class="form-filters-container__p">{{ cpu.value }}</p>
+    <input type="checkbox" name = "cpu" value = "{{ cpu.value }}">
+    <span class="form-filters-container__checkmark"></span>
+    </label>
+    {% endfor %}
+  <h3 class="form-filters__h3">Відеокарта</h3>
+    {% for graphiccard in view.get_graphiccard %}
+    <label class="form-filters-container"><p class="form-filters-container__p">{{ graphiccard.value }}</p>
+    <input type="checkbox" name = "graphiccard" value = "{{ graphiccard.value }}">
+    <span class="form-filters-container__checkmark"></span>
+    </label>
+    {% endfor %}
+  <h3 class="form-filters__h3">Оперативна пам'ять, гб</h3>
+    {% for ram in view.get_ramsize %}
+    <label class="form-filters-container"><p class="form-filters-container__p">{{ ram.value }}</p>
+    <input type="checkbox" name = "ram" value = "{{ ram.value }}">
+    <span class="form-filters-container__checkmark"></span>
+    </label>
+    {% endfor %}
+  <h3 class="form-filters__h3">Жорсткий диск, гб</h3>
+    {% for harddrive in view.get_harddrive %}
+    <label class="form-filters-container"><p class="form-filters-container__p">{{ harddrive.value }}</p>
+    <input type="checkbox" name = "harddrive" value = "{{ harddrive.value }}">
+    <span class="form-filters-container__checkmark"></span>
+    </label>
+    {% endfor %}
+  <h3 class="form-filters__h3">Блок живлення, вт</h3>
+    {% for powersupply in view.get_powersupply %}
+    <label class="form-filters-container"><p class="form-filters-container__p">{{ powersupply.value }}</p>
+    <input type="checkbox" name = "powersupply" value = "{{ powersupply.value }}">
+    <span class="form-filters-container__checkmark"></span>
+    </label>
+    {% endfor %}
+</form>
+</div>

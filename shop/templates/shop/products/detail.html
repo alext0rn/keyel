@@ -1,0 +1,78 @@
+{% extends "shop/basic.html" %}
+{% load shop_tags %}
+{% load static %}
+{% block title %}{{ product.name }}{% endblock title %}
+
+{% block content %}
+<!-- БЛОК товар детально -->
+<div class="wrapper">
+<div class = "product-detail">
+  {% if product.image %}
+    <img class = "product-detail-image" src="{{ product.image.url }}" alt="{{ product.name }} image">
+  {% else %}
+    <img class = "product-detail-image" src="{% static 'images/no_image.png' %}" alt="no image">
+  {% endif %}
+  <div class = "product-detail-description">
+    <a class = "product-detail-description__category__a" href="{% url 'shop:product_list_by_category' product.category.slug %}"><h4 class = "product-detail-description__category">{{ product.category }}</h4></a>
+    <h1 class = "product-detail-description__name">{{ product.name }}</h1>
+    <div class = "product-detail__price-cart">
+      <p class = "product-detail-price">{{ product.price }} грн.</p>
+      <form class = "product-detail-form" action="{% url "cart:cart_add" product.id %}" method="post">
+        {{ cart_product_form }}
+        {% csrf_token %}
+      <input type="submit" value="В кошик">
+      </form>
+    </div>
+    <p class = "product-detail-descriptions">{{ product.description }}</p>
+    <div class = "product-detail-characteristics">
+      <h3 class = "product-detail-characteristics__h3">Характестики товару:</h3>
+      <ul class = "product-detail-characteristics__ul">
+      {% for char in product.characteristics.all %}
+      <li class = "product-detail-characteristics__li product-detail-characteristics__name">{{ char.name }}</li>
+      <li class = "product-detail-characteristics__li product-detail-characteristics__value">{{ char.value }}</li>
+      {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <!-- БЛОК Комментариев -->
+  <div class = "review_product">
+    {% if request.user.is_authenticated %}
+    {% else %}
+      <h4 class="comments-info">Для того щоб залишати коментарі ви повинні увійти на сайт.</h2>
+    {% endif %}
+    {% with comments.count as total_comments %}
+      <h2 class="comments-info">Коментарів ({{ total_comments }})</h2>
+    {% endwith %}
+    <div class = "comments">
+      {% for comment in comments %}
+        <div class="comment">
+          <div class="comment-info">
+            {% if comment.user.profile.photo %}
+                  <img class="comment-user-photo" src="{{ comment.user.profile.photo.url }}" alt="account">
+            {% else %}
+                  <img class="comment-user-photo" src="{% static 'images/icon_account.svg '%}" alt="account">
+            {% endif %}
+          <p class="comment-info-author">{{ comment.user }} {{ comment.created|date:"j E Y" }}</p>
+          </div>
+          {{ comment.body|linebreaks }}
+        </div>
+        {% empty %}
+        <p>Ще ніхто не написав.</p>
+      {% endfor %}
+    </div>
+    {% if request.user.is_authenticated %}
+      {% if new_comment %}
+        <h4 class = "comment-form-info">Ваш коментар додано.</h4>
+      {% else %}
+        <h3 class = "comment-form-info">Додати коментар:</h3>
+        <form class = "comment-form" action="." method="post">
+        {{ comment_form.as_p }}
+        {% csrf_token %}
+        <input class="comment-form-submit" type="submit" value="Відправити">
+        </form>
+      {% endif %}
+    {% endif %}
+  </div>
+</div>
+</div>
+{% endblock content %}

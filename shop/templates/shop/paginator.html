@@ -1,0 +1,18 @@
+<div class="pagination">
+        {% if page_obj.number == n %}
+        {% else%}
+          {% if page_obj.has_previous %}
+              <a class = "pagination-links" href="?page={{ page_obj.previous_page_number }}">Попередня</a>
+          {% endif %}
+          {% for n in page_obj.paginator.page_range %}
+              {% if page_obj.number == n %}
+                <a class = "pagination-links pagination-links-current" href=''>{{ page_obj.number }}</a>
+              {% elif n > page_obj.number|add:'-3' and n < page_obj.number|add:'3' %}
+              <a class = "pagination-links" href='?page={{ n }}'>{{ n }}</a>
+              {% endif %}
+          {% endfor %}
+          {% if page_obj.has_next %}
+              <a class = "pagination-links" href="?page={{ page_obj.next_page_number }}">Наступна</a>
+          {% endif %}
+        {% endif%}
+</div>

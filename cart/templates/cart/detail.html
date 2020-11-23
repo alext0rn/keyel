@@ -1,0 +1,60 @@
+{% extends "shop/basic.html" %}
+{% load static %}
+
+{% block title %}Кошик{% endblock title%}
+
+{% block content %}
+<div class="wrapper">
+    {% if not cart %}
+      <div class = "cart__empty">
+      <h2>Ваш кошик порожній</h2>
+      <img src="{% static 'images/nothing.png' %}" alt="nothing">
+      </div>
+    {% else %}
+    <h2 class = "cart__your-cart">Ваш кошик: </h2>
+    <div class = "cart__info">
+      <h3>Всього товарів: {{ cart.get_total_product }}</h3>
+      <h3>Разом: {{ cart.get_total_price }} грн.</h3>
+      <a class = "cart__checkout" href="{% url 'orders:order_create' %}">Оформити замовлення</a>
+    </div>
+    <table class = "cart__table">
+      <thead class = "cart__table-thread">
+        <tr>
+          <th class="cart__table-thread__th1">Зображення</th>
+          <th class="cart__table-thread__th2">Товар</th>
+          <th class="cart__table-thread__th3">Кількість</th>
+          <th class="cart__table-thread__th4">Цені за од.</th>
+          <th class="cart__table-thread__th5">Всього</th>
+          <th class="cart__table-thread__th6">Видалити</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for item in cart %}
+        {% with product=item.product %}
+          <tr>
+            <th class = "cart__product-desc">
+              {% if product.image %}
+              <a href="{% url 'shop:product_detail' product.category.slug product.slug %}"><img class = "cart__product-image" src="{{ product.image.url }}" alt="{{ product.name }} image"></a>
+              {% else %}
+              <a href="{% url 'shop:product_detail' product.category.slug product.slug %}"><img class = "cart__product-image" src="{% static 'images/no_image.png' %}" alt="no image"></a>
+              {% endif %}
+            </th>
+            <th class = "cart__product-desc"><a class="cart__product-desc__product-name" href="{% url 'shop:product_detail' product.category.slug product.slug %}">{{ product.name }}</a></th>
+            <th class = "cart__product-desc">
+                <form class = "product-detail-form cart__product-form" action="{% url "cart:refresh_quantity" product.id %}" method="post">{{ item.update_quantity_form.quantity }}
+                {{ item.update_quantity_form.update }}
+                <input type="submit" value="Оновити">
+                {% csrf_token %}
+                </form>
+            </th>
+            <th class = "cart__product-desc">{{ item.price }} грн.</th>
+            <th class = "cart__product-desc">{{ item.total_price }} грн.</th>
+            <th class = "cart__product-desc"><a class="cart__product-desc__delete-product" href="{% url 'cart:cart_remove' product.id %}">Видалити</a></th>
+          </tr>
+        {% endwith%}
+      {% endfor %}
+      </tbody>
+      </table>
+  {% endif %}
+</div>
+{% endblock content %}

@@ -1,0 +1,90 @@
+{% load shop_tags %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="{% static 'style/style.css' %}">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+  <title>{% block title %}Головна{% endblock title %} | Интернет-магазин Keyel.com</title>
+</head>
+<body>
+<header class="basic-header">
+  <div class="basic-header_menu">
+    <div class="basic-header_menu_contacts">
+      <p class="basic-header_menu_contacts__contact">+38(050)000-00-00</p>
+      <p class="basic-header_menu_contacts__contact">keyelcom@gmail.com</p>
+    </div>
+    {% if request.user.is_authenticated %}
+    <div class="basic-header_menu_login">
+      <a class="basic-header_menu_login__a" href="{% url 'account:cabinet' %}">{{ request.user.username }}</a>
+      <a class="basic-header_menu_login__a" href="{% url 'account:logout' %}">Вийти</a>
+    </div>
+    {% else %}
+    <a href="{% url 'account:login' %}">
+      <div class="basic-header_menu_login">
+        <img src="{% static 'images/icon_account.svg' %}" alt="account">
+        <a class="basic-header_menu_login__a" href="{% url 'account:login' %}">Вхід</a>
+      </div>
+    </a>
+    {% endif %}
+  </div>
+  <div class="basic-header_nav">
+    <div class="basic-header_nav_image-category">
+      <a href="{% url 'shop:index' %}"><img class="basic-header_nav_image-category__image" src="{% static 'images/logo.png' %}" alt="logo"></a>
+      <ul class="basic-header_nav_image-category__ul">
+        <li class="basic-header_nav_image-category__li"><a class="basic-header_nav_image-category__li__a" href="{% url 'shop:product_list_by_category' 'kompyuteri' %}">Комп'ютери</a></li>
+        <li class="basic-header_nav_image-category__li"><a class="basic-header_nav_image-category__li__a" href="{% url 'shop:product_list_by_category' 'noutbuki' %}">Ноутбуки</a></li>
+        <li class="basic-header_nav_image-category__li"><a class="basic-header_nav_image-category__li__a" href="{% url 'shop:product_list_by_category' 'igrovi-konsoli' %}">Ігрові консолі</a></li>
+        <li class="basic-header_nav_image-category__li"><a class="basic-header_nav_image-category__li__a" href="{% url 'shop:product_list_by_category' 'igri-dlya-konsolej' %}">Ігри для консолей</a></li>
+      </ul>
+    </div>
+    <div class="basic-header_nav_cart">
+      <a href="{% url 'cart:cart_detail' %}"><img src="{% static 'images/icon_cart.svg' %}" alt="logo"></a>
+      {% if cart %}
+      <a class="basic-header_nav_cart__a" href="{% url 'cart:cart_detail' %}">{{ cart.get_total_product }} шт, {{ cart.get_total_price }} грн.</a>
+      {% else %}
+      <a class="basic-header_nav_cart__a" href="{% url 'cart:cart_detail' %}">Кошик</a>
+      {% endif %}
+    </div>
+  </div>
+</header>
+<main>
+    {% block content %}
+    {% endblock content %}
+</main>
+<footer class="basic-footer">
+<div class="basic-footer-category">
+  <h3>Категорії</h3>
+  <ul>
+    <li><a href="{% url 'shop:product_list_by_category' 'kompyuteri' %}">Комп'ютери</a></li>
+    <li><a href="{% url 'shop:product_list_by_category' 'noutbuki' %}">Ноутбуки</a></li>
+    <li><a href="{% url 'shop:product_list_by_category' 'igrovi-konsoli' %}">Ігрові консолі</a></li>
+    <li><a href="{% url 'shop:product_list_by_category' 'igri-dlya-konsolej' %}">Ігри для консолей</a></li>
+  </ul>
+</div>
+<div class="basic-footer-customer">
+  <h3>Користувачу</h3>
+  <ul>
+    <li><a href="{% url 'account:cabinet' %}">Особистий кабінет</a></li>
+    <li><a href="{% url 'account:login' %}">Увійти на сайт/Зареєструватися</a></li>
+    <li><a href="">Доставка і оплата</a></li>
+    <li><a href="">Про нас</a></li>
+  </ul>
+</div>
+<div class="basic-footer-contacts-adress">
+  <h3>Контакти</h3>
+  <ul>
+    <li>+38(050)000-00-00</li>
+    <li>keyelcom@gmail.com</li>
+  </ul>
+  <h3>Адреса</h3>
+  <ul>
+    <li>м.Київ вул.Хрещатик</li>
+  </ul>
+</div>
+</footer>
+</body>
+</html>

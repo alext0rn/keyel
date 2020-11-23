@@ -1,0 +1,34 @@
+{% extends "shop/basic.html" %}
+
+{% load static %}
+{% block title %}Особистий кабінет{% endblock title %}
+
+
+
+{% block content %}
+<div class="wrapper">
+  <div class="profile__profile-menu">
+  <div class="profile">
+    <h2 class="profile__h2">Особистий кабінет {{ request.user.username }}</h2>
+    {% if request.user.profile.photo %}
+    <img class="profile__image" src="{{ request.user.profile.photo.url }}" alt="user_photo">
+    {% else %}
+    <img class="profile__image" src="{% static 'images/no_photo.jpg' %}" alt="no_photo">
+    {% endif %}
+    <div class="profile__info">
+      <label for="">Логин:</label>
+      <p>{{ request.user.username }}</p>
+      <label for="">Имя:</label>
+      <p>{{ request.user.first_name }}</p>
+      <label for="">Фамилия:</label>
+      <p>{{ request.user.last_name }}</p>
+      <label for="">Email:</label>
+      <p>{{ request.user.email }}</p>
+      <label for="">Дата рождения:</label>
+      <p>{{ request.user.profile.date_of_birth }}</p>
+    </div>
+  </div>
+  {% include "account/profile_menu.html" %}
+  </div>
+</div>
+{% endblock content %}
